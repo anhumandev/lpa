@@ -36,4 +36,4 @@ generate main() {
 }
 </pre></code>
 More example in (src/examples)
-if you want learn P/ fully, you can go to psl.github.io
+if you want learn P/ fully, you can go to <a href="anhuamndev.github.io/psl">Here.</a>
