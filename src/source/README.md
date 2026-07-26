@@ -36,6 +36,3 @@ Here is a short info about every single file in there:
 31. **token_string.d**: Current tokenManager.
 32. **ultracex.d**: An old error method from UltraC.
 
-- **Token management system**
-
-Let me know if you need any part explained in more detail!
