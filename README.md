@@ -19,15 +19,15 @@ well, right now the project is in alpha mode. That means it's only released for 
 <h1>Examples</h1>
 P/ is easy and really human-friendly. It's very easy to read and it depends on how well or how busy you are at coding.
 <pre><code>
-genreate main() {
+generate main() {
   write("Hello World!\n");
 }
 </pre></code>
 or
 <pre><code>
-genreate main() {
-  // s0 is a escape for spcae.
-  // you can remvoe return if you want normal exit-code.
+generate main() {
+  // s0 is a escape for space
+  // you can remove return if you want normal exit-code.
   write("Hello" + "\s0" + "World\n");
   return 0;
 }
