@@ -35,5 +35,36 @@ generate main() {
         end;
 }
 </pre></code>
+
+<pre><code>
+  generate Printer() {
+	write("Hello");
+}
+
+generate main() {
+	Printer();
+}
+</code></pre>
+<pre><code>
+  generate int -v:count = 0
+
+generate print() {
+	-v:count = -v:count++
+	write(-v:count + "\n");
+	test();
+}
+
+generate test() {
+	if (-v:count > 11):
+		write("Job is Done");
+		end;
+	else: print();
+}
+
+generate main() {
+	test();
+}
+
+</code></pre>
 More example in (src/examples)
 if you want learn P/ fully, you can go to <a href="https://anhumandev.github.io/psl">Here.</a>
