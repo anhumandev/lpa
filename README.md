@@ -68,3 +68,21 @@ generate main() {
 </code></pre>
 More example in (src/examples)
 if you want learn P/ fully, you can go to <a href="https://anhumandev.github.io/psl">Here.</a>
+
+
+# Compile it yourself
+To compile, you need to have the following prerequisites:
+```DMD - Dub - bin - handy-httpd - marschiert (runtime) - dgfx - arsd-offical:simpledisplay```
+Dub dependencies are automatically downloaded during compilation and do not need to be installed from the beginning.
+<a href="https://dlang.org/download.html">DMD Download Page</a>
+(dub will install auto with DMD)
+
+after download and install dmd in your system, clone repository with ```git```:
+```git clone https://github.com/pouya1dev/lpa```
+after that, open ```lpa``` folder with ```cd lpa```
+and go to ```runtime```
+You have to first compile runtime library, them put it in a global-library folder then linux and linker can found it. for example, you can put it in ```/usr/local/lib```.
+after putting library in ```/usr/local/lib``` go back and in ```src```, run ```dub```.
+
+Also, you can change ```dub.json``` to build ```lpa``` as release not debug. (lower-binery size.)
+now, try it with ```./lpa --version``` and enjoy.
