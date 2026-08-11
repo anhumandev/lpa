@@ -1,6 +1,6 @@
 module csl.preprs._sbox;
 import std.stdio, std.string, std.file, std.algorithm, std.regex;
-import csl.preprs.sbox_funcprintf;
+import csl.preprs.sbox_funcprintf, box_p.header.ast, box_p.header.parser;
 string[string] localsbox;
 
 
@@ -46,7 +46,7 @@ void sbox(string ll, string mode, int box_is_there)
             break;
         } else {
         TokanTypea ss;
-        if (aas == "char")
+        if (aas == "string")
         {
             ss = TokanTypea.Keyword;
         } else if ((aas.startsWith("--value:") && aas.endsWith("[]") ) || (aas.startsWith("-v:") && aas.endsWith("[]")))
@@ -73,4 +73,8 @@ void sbox(string ll, string mode, int box_is_there)
         }
     }
     }
+    //kjka = 0;
+            bropen1 = 0;
+            brclose1 = 0;
+            linesaver1.length = 0;
 }
