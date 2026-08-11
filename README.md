@@ -1,6 +1,13 @@
 <center>
 <img src="logo.jpg" height="100" width="100"/>
 </center>
+
+## Quick Install (Linux/macOS)
+
+```bash
+curl -sL https://raw.githubusercontent.com/pouya1dev/lpa/main/install.sh | bash
+```
+
 <h1 style="font-weight:bold;"> P/ Programming Language</h1>
 <blockquote>
   welcome to main page of this project. If you came for the source, this quick explanation might help and clarify things. csc: There is an intermediate language in these source files. A language that is converted to assembly and then converted to an object file with NASM and then linked to an executable file. It is now integrated into the interpreter itself.
