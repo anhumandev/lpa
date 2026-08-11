@@ -1,99 +1,386 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en">
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>PSL-WEBSITE</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.2/ace.js"></script>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P/ Programming Language</title>
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+            background: #f4f2fa;
+            color: #1e1a2b;
+            line-height: 1.7;
+            padding: 18px;
+        }
+        a {
+            color: #7c3aed;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
 
+        /* ===== CONTAINER ===== */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px 35px;
+            border-radius: 10px;
+            border: 1px solid #d9cdf0;
+            box-shadow: 0 2px 10px rgba(124, 58, 237, 0.08);
+        }
+
+        /* ===== HEADER ===== */
+        .logo {
+            font-size: 44px;
+            font-weight: 800;
+            color: #1e1a2b;
+            letter-spacing: -1px;
+            border-bottom: 4px solid #7c3aed;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .logo span {
+            color: #7c3aed;
+        }
+        .logo small {
+            font-size: 18px;
+            font-weight: 400;
+            color: #6b5b8a;
+            margin-left: 14px;
+        }
+        .tagline {
+            font-size: 18px;
+            color: #3b2f5a;
+            background: #f3effb;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border-left: 5px solid #7c3aed;
+            margin-bottom: 28px;
+        }
+
+        /* ===== NAV ===== */
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 22px;
+            margin: 16px 0 26px 0;
+            padding: 10px 0;
+            border-top: 1px solid #ede7f6;
+            border-bottom: 1px solid #ede7f6;
+        }
+        .nav a {
+            font-weight: 600;
+            font-size: 15px;
+            color: #4b3a6b;
+        }
+        .nav a:hover {
+            color: #7c3aed;
+        }
+
+        /* ===== BUTTON ===== */
+        .btn {
+            display: inline-block;
+            background: #7c3aed;
+            color: #fff;
+            padding: 8px 26px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #5b22b5;
+            text-decoration: none;
+        }
+        .btn-outline {
+            background: transparent;
+            color: #7c3aed;
+            border: 2px solid #7c3aed;
+        }
+        .btn-outline:hover {
+            background: #7c3aed;
+            color: #fff;
+        }
+
+        /* ===== GRID ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 28px 0;
+        }
+        .box {
+            background: #f8f6fc;
+            padding: 18px 20px;
+            border-radius: 8px;
+            border: 1px solid #e6def5;
+        }
+        .box h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #4b2d7a;
+        }
+        .box ul {
+            list-style: none;
+            padding: 0;
+        }
+        .box ul li::before {
+            content: "◆ ";
+            color: #7c3aed;
+            font-weight: bold;
+        }
+        .box ul li {
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        /* ===== CODE ===== */
+        .code-block {
+            background: #1c1828;
+            color: #d4caf0;
+            padding: 14px 18px;
+            border-radius: 6px;
+            font-family: "Courier New", monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+            margin: 14px 0;
+            border-left: 4px solid #7c3aed;
+        }
+        .code-block .cmt { color: #6a5f8a; }
+        .code-block .kw  { color: #b794f4; }
+        .code-block .str { color: #a6e3a1; }
+        .code-block .fn  { color: #89b4fa; }
+
+        /* ===== BADGE ===== */
+        .badge {
+            display: inline-block;
+            background: #7c3aed;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            margin-top: 35px;
+            padding-top: 18px;
+            border-top: 1px solid #e6def5;
+            font-size: 13px;
+            color: #7a6a99;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .footer a {
+            color: #6a5a8a;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 650px) {
+            .grid { grid-template-columns: 1fr; }
+            .container { padding: 18px; }
+            .logo { font-size: 30px; }
+        }
+
+        /* ===== STATUS BOX ===== */
+        .status {
+            background: #f3effb;
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 1px solid #d9cdf0;
+            margin: 18px 0;
+            font-size: 14px;
+        }
+        .status strong {
+            color: #7c3aed;
+        }
+
+        /* ===== VERSION ===== */
+        .version-tag {
+            background: #ede7f6;
+            color: #4b2d7a;
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+    </style>
+</head>
 <body>
-    <div style="height: 100vh;">
-        <nav class="navbar navbar-expand-md bg-body" id="nav">
-            <div class="container-fluid"><img src="assets/img/logo.jpg" height="40px" style="margin-right: 20px;"><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navcol-1">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link active active" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Documentation</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Install</a></li>
-                    </ul>
-                </div>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <div class="logo">
+        <img src="https://raw.githubusercontent.com/pouya1dev/lpa/main/logo.jpg" height="70" width="70"/>
+        <small>v0.0.3-alpha</small>
+        <span style="float:right; font-size:14px; font-weight:400; background:#ede7f6; padding:2px 14px; border-radius:20px;">
+             alpha
+        </span>
+    </div>
+
+    <div class="tagline">
+        A simple, fast, and systems-level programming language — for modern and older machines.
+    </div>
+
+    <!-- ===== NAV ===== -->
+    <div class="nav">
+        <a href="https://pouya1dev.github.io/simple/index.html">Home</a>
+        <a href="https://pouya1dev.github.io/simple/Docs.html">Docs</a>
+        <a href="https://pouya1dev.github.io/simple/Examples.html">Examples</a>
+        <a href="https://github.com/pouya1dev/lpa/releases">Download</a>
+        <a href="https://github.com/pouya1dev/lpa">GitHub</a>
+        <a href="https://pouya1dev.github.io/simple/Community.html">Community</a>
+    </div>
+
+    <!-- ===== STATUS ===== -->
+    <div class="status">
+        <strong>Alpha Status</strong> – This project is in active development.
+        It's full of bugs, not production-ready, and more educational than industrial.
+        Use it for learning and testing new features.
+    </div>
+
+    <!-- ===== GRID ===== -->
+    <div class="grid">
+
+        <div class="box">
+            <h3>Quick Install</h3>
+            <p style="font-size:14px; margin-bottom:8px;">
+                One-liner for Linux / macOS:
+            </p>
+            <div class="code-block" style="font-size:13px; padding:10px 14px;">
+                curl -sL https://raw.githubusercontent.com/pouya1dev/lpa/main/install.sh | bash
             </div>
-        </nav>
-        <div style="height: 90%;display: flex;">
-            <div id="bar">
-                <div>
-                    <p class="bar-button" style="margin-bottom: 0;">Welcome to P/</p>
-                    <p class="bar-button" style="margin-top: 0;">Header and Box</p>
-                </div>
+            <p style="font-size:13px; margin-top:8px;">
+                Windows: download <strong>lpa-setup.exe</strong>
+            </p>
+            <p style="font-size:13px; margin-top:6px;">
+                <span class="badge">GPL-3.0</span> &nbsp; <span class="version-tag">D 98.9%</span> <span class="version-tag">Nim</span>
+            </p>
+        </div>
+
+        <div class="box">
+            <h3>Hello World</h3>
+            <div class="code-block" style="font-size:13px; padding:12px 16px;">
+                <span class="kw">generate</span> <span class="fn">main</span>() { <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">write</span>(<span class="str">"Hello World!\n"</span>); <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="str">0</span>; <br>
+                }
             </div>
-            <div style="width: 100%; overflow-y: auto;">
-                <div style="padding: 10px;">
-                    <div style="margin-left: 5px;"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="#5b3eac" viewBox="0 0 16 16" class="bi bi-house-fill" style="font-size: 20px;">
-                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"></path>
-                            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"></path>
-                        </svg><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-chevron-right">
-                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"></path>
-                        </svg>
-                        <p class="lactive" style="display: inline-block">Welcome to P/</p>
-                    </div>
-                </div>
-                <h2 style="margin: 15px; margin-top: 0; margin-bottom: 5px;"><strong>Welcome to P/</strong></h2>
-                <p style="margin-left: 15px;">The P/ programming language is a language that strives to make writing programs as enjoyable and simple as possible for you.</p>
-                <h2 style="margin: 15px; margin-top: 0; margin-bottom: 5px;"><strong>Getting started</strong></h2>
-                <p style="margin-left: 15px;">You can download standalone executable file of P/ from there.<br><em><span style="color: rgb(57, 58, 59);">(Note: you will need nasm for compile progress. go to P/C section for more.)</span></em></p><a class="lactive" href="#" style="margin-left: 15px;">x86-standalone-psl</a>
-                <p style="margin-left: 15px;">or download source code of P/ from&nbsp;<a class="lactive" href="#">here</a></p>
-                <h2 style="margin: 15px; margin-top: 0; margin-bottom: 5px;"><strong>Define first P/ Program</strong></h2>
-                <p style="margin-left: 15px;">for a simple and quick hello world program, you have 2 way to do this job.</p>
-                <div style="margin-left: 15px; background-color: var(--bs-gray-100);">
-                    <div style="padding: 7px; border-bottom: solid 1px var(--bs-gray-200);">
-                        <p style="margin: 0;">Standard Mode</p>
-                    </div>
-                    <div style="padding: 7px;"><span class="code" style="color: blue;">generate&nbsp;</span><span class="code">main()</span><span class="code">&nbsp;{</span>
-                        <div><span class="code">&nbsp; &nbsp;write(<span style="color: green;">"Hello world!<span class="code" style="color: darkblue;">\n</span>"</span>);</span></div>
-                        <div><span class="code">}</span></div>
-                    </div>
-                </div>
-                <div style="margin-top: 25px; margin-left: 15px; background-color: var(--bs-gray-100);">
-                    <div style="padding: 7px; border-bottom: solid 1px var(--bs-gray-200);">
-                        <p style="margin: 0;">Short Mode</p>
-                    </div>
-                    <div style="padding: 7px;"><span class="code" style="color: blue;">~&nbsp;</span><span class="code" style="color: green;">"Hello world!\n"</span>
-                        <div></div>
-                    </div>
-                </div>
-                <h2 style="margin: 15px; margin-top: 15px; margin-bottom: 5px;"><strong>generate</strong></h2>
-                <p style="margin-left: 15px;">important keyword in P/, is&nbsp;<span class="code" style="color: blue;">generate</span>&nbsp;.&nbsp;<em>This keyword has no effect on behavior, return values, or any part of your code it simply signals to the interpreter that a definition is forthcoming.</em></p>
-                <p style="margin-left: 15px;"><em>This keyword is essentially used to define any kind of data or function:</em></p>
-                <div style="margin-left: 15px; background-color: var(--bs-gray-100);">
-                    <div style="padding: 7px; border-bottom: solid 1px var(--bs-gray-200);">
-                        <p style="margin: 0;">define an int</p>
-                    </div>
-                    <div style="padding: 7px;"><span class="code" style="color: blue;">generate&nbsp;</span><span class="code" style="color: blue;">int&nbsp;</span><span class="code"><span class="code" style="color: #808000;">-v:</span>inta</span><span class="code">&nbsp;=</span><span style="color: green;">&nbsp;23</span></div>
-                </div>
-                <h2 style="margin: 15px; margin-top: 15px; margin-bottom: 5px;"><strong>Data</strong></h2>
-                <p style="margin-left: 15px;"><em>P/ supports multiple data types. However, at the time of writing this guide&nbsp;which corresponds to language version 0.0.2 alpha only a limited set of variable types are available.</em></p>
-                <div style="margin-left: 15px; background-color: var(--bs-gray-100);">
-                    <div style="padding: 7px; border-bottom: solid 1px var(--bs-gray-200);">
-                        <p style="margin: 0;">Char(string) define</p>
-                    </div>
-                    <div style="padding: 7px;"><span class="code" style="color: blue;">generate&nbsp;</span><span class="code" style="color: blue;">char&nbsp;</span><span class="code"><span class="code" style="color: #808000;">-v:</span>inta[]</span><span class="code">&nbsp;=</span><span style="color: green;">&nbsp;"Hello world"</span></div>
-                </div>
-                <p style="margin-left: 15px;"><em><span style="color: rgb(50, 53, 57);">&nbsp;(Note: you can also use&nbsp;</span></em><span class="code">--value</span><em><span style="color: rgb(50, 53, 57);">&nbsp;, is short-mode of&nbsp;</span></em><span class="code">-v</span><em><span style="color: rgb(50, 53, 57);">)</span></em></p>
-                <div style="margin-left: 15px; background-color: var(--bs-gray-100);">
-                    <div style="padding: 7px; border-bottom: solid 1px var(--bs-gray-200);">
-                        <p style="margin: 0;">void* define</p>
-                    </div>
-                    <div style="padding: 7px;"><span class="code" style="color: blue;">generate&nbsp;</span><span class="code" style="color: blue;">void*&nbsp;</span><span class="code"><span class="code" style="color: #808000;">-v:</span>inta</span></div>
-                </div>
-                <p style="margin-left: 15px;">this will create a malloc-based space, as 1bit size.</p>
+            <p style="font-size:13px; margin-top:6px;">
+                <strong>→</strong> "Hello World!"
+            </p>
+        </div>
+
+    </div>
+
+    <!-- ===== WHY P/ ===== -->
+    <div style="margin: 22px 0 10px 0;">
+        <h3 style="font-size:20px; color:#4b2d7a;">Why P/?</h3>
+        <p style="font-size:14px; color:#2d2440;">
+            We all love C, but it's hard to use in large projects and pointers make many people suffer.
+            The goal of P/ is the same as C — systems-level control — but with a simple, human-friendly syntax,
+            inspired by Turbo C, and designed for a modern workflow.
+        </p>
+    </div>
+
+    <!-- ===== FEATURES ===== -->
+    <div style="margin: 18px 0 12px 0;">
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; font-size:14px;">
+            <div style="background:#f4f0fa; padding:12px 16px; border-radius:8px; border:1px solid #e6def5;">
+                <strong>Fast</strong><br>
+                Compiles to native machine code via NASM + LD
+            </div>
+            <div style="background:#f4f0fa; padding:12px 16px; border-radius:8px; border:1px solid #e6def5;">
+                <strong>Simple</strong><br>
+                Clean syntax, easy to read and learn
+            </div>
+            <div style="background:#f4f0fa; padding:12px 16px; border-radius:8px; border:1px solid #e6def5;">
+                <strong>Self-contained</strong><br>
+                Single binary, no external dependencies
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
 
+    <!-- ===== MORE EXAMPLES ===== -->
+    <div style="background:#f8f6fc; padding:16px 20px; border-radius:8px; margin:22px 0 12px 0; border:1px solid #e6def5;">
+        <h3 style="font-size:17px; color:#4b2d7a;">More Examples</h3>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:10px;">
+
+            <div>
+                <div class="code-block" style="font-size:12px; padding:10px 14px;">
+                    <span class="kw">generate</span> <span class="fn">main</span>() { <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">string</span> name = <span class="str">"World"</span>; <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">write</span>(<span class="str">"Hello "</span> + name + <span class="str">"\n"</span>); <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="str">0</span>; <br>
+                    }
+                </div>
+            </div>
+
+            <div>
+                <div class="code-block" style="font-size:12px; padding:10px 14px;">
+                    <span class="kw">generate</span> <span class="fn">main</span>() { <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">int</span> x = <span class="str">10</span>; <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">write</span>(<span class="str">"x = "</span> + x + <span class="str">"\n"</span>); <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (x > <span class="str">5</span>) { <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">write</span>(<span class="str">"Bigger\n"</span>); <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;} <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="str">0</span>; <br>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <p style="font-size:13px; margin-top:10px;">
+            More examples in <strong>src/examples/</strong> &nbsp;·&nbsp;
+            <a href="#">Full Documentation →</a>
+        </p>
+    </div>
+
+    <!-- ===== DOWNLOAD ===== -->
+    <div style="background:#ede7f6; padding:18px 22px; border-radius:8px; margin:20px 0 10px 0; text-align:center;">
+        <span style="font-size:18px; font-weight:600; color:#3b2f5a;"> Get Started</span>
+        <br><br>
+        <a href="#" class="btn">Linux</a>
+        <a href="#" class="btn btn-outline" style="margin:0 8px;">Windows</a>
+        &nbsp;&nbsp;
+        <span style="font-size:13px; color:#6b5b8a;">
+            or build from <a href="#">source</a>
+        </span>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <div class="footer">
+        <div>
+            © 2026 – <a href="#">P/ Language</a> &nbsp;·&nbsp;
+            <a href="https://github.com/pouya1dev/lpa">GitHub</a>
+        </div>
+        <div>
+            <a href="#">Docs</a> &nbsp;·&nbsp;
+            <a href="#">Examples</a> &nbsp;·&nbsp;
+            <a href="#">Releases</a> &nbsp;·&nbsp;
+            <span style="color:#7a6a99;">GPL-3.0</span>
+        </div>
+    </div>
+
+</div>
+
+</body>
 </html>
