@@ -1,13 +1,18 @@
 {
-	"description": "A minimal D application.",
 	"authors": [
 		"AHuman"
 	],
-	"dependencies": {
-		"dgfx": "~>1.3.6",
-		"arsd-official:simpledisplay": "~>10.7.0"
-	},
-	"copyright": "Copyright © 2026, https://github.com/anhumandev",
 	"license": "proprietary",
-	"name": "psl"
+	"copyright": "Copyright © 2026, https://github.com/anhumandev",
+	"name": "lpa",
+	"libs": [
+		"marschiert"
+	],
+	"description": "A minimal D application.",
+	"dependencies": {
+		"handy-httpd": "~>8.7.0",
+		"marschiert": {
+			"path": "./runtime/"
+		}
+	}
 }
