@@ -326,10 +326,9 @@
 
             <div>
                 <div class="code-block" style="font-size:12px; padding:10px 14px;">
+                    <span class="kw">generate string</span> -v:name[] = <span class="str">"World"</span>; <br>
                     <span class="kw">generate</span> <span class="fn">main</span>() { <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">string</span> name = <span class="str">"World"</span>; <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">write</span>(<span class="str">"Hello "</span> + name + <span class="str">"\n"</span>); <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="str">0</span>; <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">write</span>(<span class="str">"Hello "</span> + -v:name + <span class="str">"\n"</span>); <br> &nbsp;&nbsp;&nbsp;&nbsp;<span> & </span><span class="kw">return</span> <span class="str">0</span>; <br>
                     }
                 </div>
             </div>
@@ -340,8 +339,8 @@
                     
                     <span class="kw">generate</span> <span class="fn">main</span>() { <br>
                     
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">write</span>(<span class="str">"x = "</span> + x + <span class="str">"\n"</span>); <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (x > <span class="str">5</span>): <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">write</span>(<span class="str">"x = "</span> + -v:x + <span class="str">"\n"</span>); <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (-v:x > <span class="str">5</span>): <br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">write</span>(<span class="str">"Bigger\n"</span>); <br>
                     &nbsp;&nbsp;&nbsp;&nbsp;end; <br>
                     }
