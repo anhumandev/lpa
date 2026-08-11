@@ -1,7 +1,6 @@
 module infss;
 
 import std.stdio;
-import error;
 import std.file;
 import std.conv;
 import std.algorithm;
@@ -9,9 +8,6 @@ import std.string;
 import std.regex;
 import token_string, ultracex, ssm;
 import core.stdc.stdlib: exit, malloc;
-import cslg.ultracgraphic.sgfu;
-import csl.mempack.freec;
-import csl.mempack.mallc;
 import csl.preprs.define, func;
 import math_manager;
 import lbrk, ast;
@@ -20,7 +16,8 @@ import cslm.proc, cslm.randomnameforvalue, cshort, intfunc_fs;
 import header.ast, header.parser;
 //box plus imports
 import box_p.header.ast, box_p.header.parser;
-
+public import marschiert; //runtime
+import ast;
 enum TokanType {
     Keyword,
     Name,
@@ -44,16 +41,18 @@ struct Tokan
 
 
 // dic-value
-int[string] int_s;
-string[string] str;
-uint[string] unint;
+
 Tokan[] tks;
 ubyte[string] ubytesave;
 int graphicalMode = 0;
 int shortmode = 0;
 //fi
+int read_file_call = 0;
+string read_file_save_result_string;
+const string _requestedversion = "0.0.1";
 void infs(string filepath, string mode, string la)
 {
+    init("0.0.1");
     string hah = "";
     string ccfinal = "";
     int ssog = 0;
@@ -71,7 +70,7 @@ void infs(string filepath, string mode, string la)
             if (mode == "debug") writeln(hh);
             a++;
             TokanType type;
-            if (hh == "int" || hh == "char" || hh == "long" || hh == "short" || hh == "float" || hh == "double" || hh == "void*" || hh == "if" || hh == "generate") //keywords in here
+            if (hh == "int" || hh == "string" || hh == "long" || hh == "short" || hh == "float" || hh == "double" || hh == "void*" || hh == "if" || hh == "generate") //keywords in here
             {
                 type = TokanType.Keyword;
             } else if(hh == "unsigned" || hh == "signed" || hh == "auto") {
@@ -113,7 +112,7 @@ void infs(string filepath, string mode, string la)
                         tks = null;
                         continue;
                     }
-                    if (tks.length > 0 && tks[0].value != "int" && tks[0].value == "char" && tks[0].value == "#_SBOX")
+                    if (tks.length > 0 && tks[0].value != "int" && tks[0].value == "string" && tks[0].value == "#_SBOX")
                     {
                             
 
@@ -136,6 +135,14 @@ void infs(string filepath, string mode, string la)
         
         try {
 
+            // ============== function manager ========
+            //writeln(count_to_find_end);
+            handle_(tks, mode, ga);
+            if (count_to_find_end == 1)
+            {
+            
+                continue;
+            }
             // ============== Plus Box Manager ========  
                if(counter_of_box == 1)
                 {
@@ -235,7 +242,7 @@ void infs(string filepath, string mode, string la)
                 int unsi = 0;
                 
             if (tks.length > 0 && (tks[0].token == TokanType.Keyword || tks[0].token == TokanType.undr || tks[0].value == "generate")){
-                if (tks[0].value == "int" || tks[0].value == "char" || tks[0].value == "double" || tks[0].value == "float" || tks[0].value == "double" || tks[0].value == "long" || tks[0].value == "short" || tks[0].value == "signed" || tks[0].value == "unsigned" || tks[0].value == "void*" || tks[0].value == "generate"){
+                if (tks[0].value == "int" || tks[0].value == "string" || tks[0].value == "double" || tks[0].value == "float" || tks[0].value == "double" || tks[0].value == "long" || tks[0].value == "short" || tks[0].value == "signed" || tks[0].value == "unsigned" || tks[0].value == "void*" || tks[0].value == "generate"){
                     if (mode == "debug")
                     {
                         writeln(tks[0].value);
@@ -250,7 +257,7 @@ void infs(string filepath, string mode, string la)
                         if (tks[2].token == TokanType.Name)
                         {
                             
-                            if (tks[0].value == "char"){
+                            if (tks[0].value == "string"){
                                 if (tks[1].value.endsWith("[]")){
                                     if (tks[2].value == "=")
                                     {
@@ -277,10 +284,12 @@ void infs(string filepath, string mode, string la)
                                             unsi--;
                                             continue;
                                         } else {
-                                            writeln("str1");
-                                            tks = null;
-                                            unsi--;
-                                            continue;
+                                            if (tks[3].value in str)
+                                            {
+                                                str[tks[1].value.replace("[]","")] = str[tks[3].value];
+                                            } else if (tks[3].value in int_s){
+                                                str[tks[1].value.replace("[]", "")] = to!string(int_s[tks[3].value]);
+                                            }
                                         }
                                     } else {
                                         writeln("str2");
@@ -359,7 +368,7 @@ void infs(string filepath, string mode, string la)
                             }
                         } else {
                             tks = tks.remove(0);
-                            if (tks[0].value == "char"){
+                            if (tks[0].value == "string"){
                                 if (tks[1].value.endsWith("[]")){
                                     if (tks[2].value == "=")
                                     {
@@ -391,26 +400,37 @@ void infs(string filepath, string mode, string la)
                                                 continue;
                                             } else prinPanic(kodes._syntex_faild, ga);
                                         } else if (tks[3].value.strip.startsWith("readFile(") && tks[3].value.strip.endsWith(")")) {
-                                            auto ka = regex(`readFile\((\S+)\)`);
-                                            auto lala = match(tks[3].value, ka);
-                                            if (!lala.empty)
-                                            {
-                                                auto ak = tks[1].value.replace("[]", "");
-                                                auto iop = readText(lala.captures[1]);
-                                                str[ak] = iop;
-                                                tks = null;
-                                                unsi--;
-                                                continue;
-                                            }
+                                            read_file_call = 1;
+                                            str[tks[1].value.replace("[]", "")] = "";
+                                            read_file_save_result_string = tks[1].value.replace("[]", "");
                                         } else {
-                                            writeln("str1");
-                                            tks = null;
-                                            continue;
+                                            if (tks[3].value in str)
+                                            {
+                                                str[tks[1].value.replace("[]","")] = str[tks[3].value];
+                                                read_file_save_result_string = tks[1].value.replace("[]", "");
+                                            } else if (tks[3].value in int_s){
+                                                str[tks[1].value.replace("[]", "")] = to!string(int_s[tks[3].value]);
+                                                read_file_save_result_string = tks[1].value.replace("[]", "");
+                                            }
                                         }
                                     } else {
                                         writeln("str2");
                                         tks = null;
                                         continue;
+                                    }
+                                } else if (tks[1].value == "-v:readFile.filename"){
+                                    if (read_file_call == 1)
+                                    {
+                                        if (tks[3].value.startsWith("\"") && tks[3].value.endsWith("\"")){
+                                            str[read_file_save_result_string] = readText(tks[3].value.replace("\"", ""));
+                                        } else {
+                                            if (tks[3].value in str)
+                                            {
+                                                str[tks[1].value.replace("[]","")] = str[tks[3].value];
+                                            } else if (tks[3].value in int_s){
+                                                str[tks[1].value.replace("[]", "")] = to!string(int_s[tks[3].value]);
+                                            }
+                                        }
                                     }
                                 } else {
                                     writeln("strfuckup.");
@@ -494,11 +514,12 @@ void infs(string filepath, string mode, string la)
 
 }
 
-
-void es(string line, string mode){
-    int nbr = 0;
+public int if_flag;
+int nbr = 0;
     int l = 0;
     string codes;
+void es(string line, string mode){
+    
     string[] lia = line.splitLines();
     foreach(lio; lia){
         lio = lio.idup;
@@ -527,6 +548,7 @@ void es(string line, string mode){
                             funcl(lo, mode);
                         }
                         nbr = 0;
+                        //if_flag = 0;
                         l = 0;
                         codes = "";
                         continue;
@@ -538,6 +560,7 @@ void es(string line, string mode){
                 } else if(nbr == 6)
                 {
                     nbr = 9;
+                    if_flag = 1;
                     l = 99;
 
                     continue;
@@ -569,6 +592,12 @@ void es(string line, string mode){
                     } else {
                     string ll = lpl.captures[1];
                     if (mode == "debug") writeln(ll);
+                    /*if (ll.indexOf(",") != -1) string[] lopai = ll.strip(",");
+                    foreach(osama; lopai)
+                    {
+                        osama = osama.split();
+                         
+                    } */
                     if(ll.startsWith("strcmp(") && ll.endsWith(")"))
                     {
                         string kk = ll.replace("strcmp(", "");
@@ -613,10 +642,12 @@ void es(string line, string mode){
                                 if (l1 == wtt)
                                 {
                                     aa = 1;
+                                    if_flag = 0;
                                     c1 = true;
                                     l1 = wtt;
                                 } else {
                                     aa = 0;
+                                    if_flag = 1;
                                     c1 = true;
                                     l1 = wtt;
                                 }
@@ -646,17 +677,19 @@ void es(string line, string mode){
                     } else if(ll.indexOf(">") != -1)
                     {
                         string[] rmm = ll.split(">");
-                        int[int] lenin;
+                        int[2] lenin;
                         foreach(la, mms; rmm)
                         {
                             rmm[la] = mms.strip();
+                            
                         }
+                        
                         if (rmm[0] in int_s)
                         {
                             lenin[0] = int_s[rmm[0]];
                             if (rmm[1] in int_s){
                                 lenin[1] = int_s[rmm[1]];
-                            } else lenin[0] = to!int(rmm[0]);
+                            } else lenin[1] = to!int(rmm[1]);
                         } else if (rmm[1] in int_s)
                         {
                             lenin[1] = int_s[rmm[1]];
@@ -665,11 +698,12 @@ void es(string line, string mode){
                             lenin[1] = to!int(rmm[1]);
                             lenin[0] = to!int(rmm[0]);
                         }
-
+                        //writeln(lenin);
                         if (lenin[0] > lenin[1])
                         {
                             if (lio.indexOf(":") != -1){
                                 nbr = 3;
+                                if_flag = 0;
                                 if(mode == "debug") writeln("!");
                                 continue;
                             } else {
@@ -679,6 +713,7 @@ void es(string line, string mode){
                         } else {
                             if (lio.indexOf(":") != -1){
                                 nbr = 6;
+                                if_flag = 1;
                                 if(mode == "debug") writeln("!O");
                                 continue;
                             } else {
@@ -686,10 +721,10 @@ void es(string line, string mode){
                                  exit(0);
                              }
                         }
-                    } else if(ll.indexOf("<"))
+                    } else if(ll.indexOf("<") != -1)
                     {
                         string[] rmm = ll.split("<");
-                        int[int] lenin;
+                        int[2] lenin;
                         foreach(la, mms; rmm)
                         {
                             rmm[la] = mms.strip();
@@ -699,7 +734,7 @@ void es(string line, string mode){
                             lenin[0] = int_s[rmm[0]];
                             if (rmm[1] in int_s){
                                 lenin[1] = int_s[rmm[1]];
-                            } else lenin[0] = to!int(rmm[0]);
+                            } else lenin[1] = to!int(rmm[1]);
                         } else if (rmm[1] in int_s)
                         {
                             lenin[1] = int_s[rmm[1]];
@@ -713,6 +748,7 @@ void es(string line, string mode){
                         {
                             if (lio.indexOf(":") != -1){
                                 nbr = 3;
+                                if_flag = 0;
                                 if(mode == "debug") writeln("!");
                                 continue;
                             } else {
@@ -722,6 +758,7 @@ void es(string line, string mode){
                         } else {
                             if (lio.indexOf(":") != -1){
                                 nbr = 6;
+                                if_flag = 1;
                                 if(mode == "debug") writeln("!O");
                                 continue;
                             } else {

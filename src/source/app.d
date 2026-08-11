@@ -3,14 +3,17 @@ import init_prog;
 import error;
 import std.file, std.regex, std.string, std.algorithm, core.stdc.stdlib, std.conv;
 import infss;
-
+public import marschiert;
+// web server
+import handy_httpd;
+import handy_httpd.handlers.file_resolving_handler;
 int oa = 0;
 string aj;
 void main(string[] args)
 {
 	if (args.length < 2){
-		writeln("\033[1mP/ (V0.1) https://github.com/anhumandev/csl");
-		writeln("	Usage: ./csl [flag] [options]");
+		writeln("\033[1mP/ (V0.0.3) https://github.com/anhumandev/csl");
+		writeln("	Usage: ./lpa/lpaash [flag] [options]");
 		writeln("\nFlags:\n	-e | --enter: Importing a P/ program");
 		writeln("	-ge| --generate-exe: Generate an executable binary as a standalone application.");
 		writeln("	-n | --normal: Run the interpreter in normal mode (without interpretation messages)");
@@ -22,8 +25,11 @@ void main(string[] args)
 		writeln("	-adebug | --asm-debug: Print result of P/C to NASM.");
 		writeln("	-cdebug | --csc-debug: Printf P/ to P/C result.");
 		writeln("	-td | --term-debugger: run terminal-based Debugger.");
-		writeln("	-ast | --abstract-syntax-tree: Use AST to run your program. (BETA) (More info: https://github.com/anhumandv/psl/ast/)");
-		writeln("\nExample: ./psl -e hi.csl -n\033[0m");
+		writeln("	-ast | --abstract-syntax-tree: Use AST to run your program. (BETA) (More info: https://github.com/anhumandv/lpa/ast/)");
+		writeln("Versions:");
+		writeln("	marschiert(runtime librray): " ~ _version);
+		writeln("	P/: 0.0.3");
+		writeln("\nExample: ./lpa -e hi.lpa-n\033[0m");
         //prinPanic("WUT");
     } else if(args[1] == "-e" || args[1] == "--enter" || args[1] == "--generate-exe" || args[1] == "-ge"){
         if (exists(args[2])){
@@ -53,11 +59,11 @@ void main(string[] args)
         }
     } else if (args[1] == "-v" || args[1] == "--version")
 	{
-		writeln("\033[1mP/ (v0.1) " ~ __DATE__ ~ " " ~ __TIME__);
+		writeln("\033[1mP/ (v0.0.3) " ~ __DATE__ ~ " " ~ __TIME__);
 	} else if (args[1] == "-h" || args[1] == "--help")
 	{
-		writeln("\033[1mP/ (V0.1) https://github.com/anhumandev/csl");
-		writeln("	Usage: ./csl [flag] [options]");
+		writeln("\033[1mP/ (V0.0.3) https://github.com/anhumandev/csl");
+		writeln("	Usage: ./lpa/lpaash [flag] [options]");
 		writeln("\nFlags:\n	-e | --enter: Importing a P/ program");
 		writeln("	-ge| --generate-exe: Generate an executable binary as a standalone application.");
 		writeln("	-n | --normal: Run the interpreter in normal mode (without interpretation messages)");
@@ -69,22 +75,29 @@ void main(string[] args)
 		writeln("	-adebug | --asm-debug: Print result of P/C to NASM.");
 		writeln("	-cdebug | --csc-debug: Printf P/ to P/C result.");
 		writeln("	-td | --term-debugger: run terminal-based Debugger.");
-		writeln("	-ast | --abstract-syntax-tree: Use AST to run your program. (BETA) (More info: https://github.com/anhumandv/psl/ast/)");
-		writeln("\nExample: ./psl -e hi.csl -n\033[0m");
+		writeln("	-ast | --abstract-syntax-tree: Use AST to run your program. (BETA) (More info: https://github.com/anhumandv/lpa/ast/)");
+		writeln("\nExample: ./lpa -e hi.lpa -n\033[0m");
 	} else if (args[1] == "-td" || args[1] == "--term-debugger")
 	{
 		writeln("\033[1mP/-Term-Debugger V0.0.1 based on P/ Version 0.1\033[0m");
-		writeln("\033[34mhttps://github.com/anhumandev/csl/c-term-debugger/\033[0m");
+		writeln("\033[34mhttps://github.com/anhumandev/lpa/p-term-debugger/\033[0m");
 		writeln("\033[1m\n\t[I]: Run \"help\" to get list of functions and a help menu.\033[0m");
 		writeln("");
 		ctermde();
+	} else if (args[1] == "-rv" || args[1] == "--runtime-version")
+	{
+		writeln("\033[1mMarschiert (runtime library for P/) " ~ _version ~ "\n© 2026 All rights reserved.\033[0m");
+	} else if (args[1] == "-x" || args[1] == "--xdoc")
+	{
+		auto lpaa = new FileResolvingHandler(".");
+		new HttpServer().start();
 	}
 }
 
 void ctermde()
 {
 	//int oa = 0;
-	write("(csl-term-debugger) ");
+	write("(lpa-term-debugger) ");
 	auto jaj = readln();
 	if (jaj.strip() == "help")
 	{

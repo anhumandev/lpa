@@ -1,7 +1,7 @@
 module init_prog;
 
 import std.stdio;
-import error;
+import marschiert;
 import std.file;
 /*
     WUT (Wrong usage type)
