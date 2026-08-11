@@ -336,13 +336,14 @@
 
             <div>
                 <div class="code-block" style="font-size:12px; padding:10px 14px;">
+                    <span class="kw">generate int</span> --value:x = <span class="str">10</span> <br>
+                    
                     <span class="kw">generate</span> <span class="fn">main</span>() { <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">int</span> x = <span class="str">10</span>; <br>
+                    
                     &nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">write</span>(<span class="str">"x = "</span> + x + <span class="str">"\n"</span>); <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (x > <span class="str">5</span>) { <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (x > <span class="str">5</span>): <br>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">write</span>(<span class="str">"Bigger\n"</span>); <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;} <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="str">0</span>; <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;end; <br>
                     }
                 </div>
             </div>
