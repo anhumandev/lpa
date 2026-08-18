@@ -1,25 +1,23 @@
-## Important Note 
-this repo is no longer be in work. the name of language changed from P/ to <a href="https://github.com/ekolang/eko">Eko</a>.
-<center>
-<img src="logo.jpg" height="100" width="100"/>
+
+<img src="eko.jpg" height="100" width="100"/>
 </center>
 
 ## Quick Install (Linux/macOS)
 
 ```bash
-curl -sL https://raw.githubusercontent.com/pouya1dev/lpa/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/ekolang/eko/main/install.sh | bash
 ```
 
-<h1 style="font-weight:bold;"> P/ Programming Language</h1>
+<h1 style="font-weight:bold;"> Eko Programming Language</h1>
 <blockquote>
   welcome to main page of this project. If you came for the source, this quick explanation might help and clarify things. csc: There is an intermediate language in these source files. A language that is converted to assembly and then converted to an object file with NASM and then linked to an executable file. It is now integrated into the interpreter itself.
 </blockquote>
-<h1 style="font-weight:bold;">Why P/?</h1>
-We all love C, but at the same time, it's difficult to use in projects and working with pointers makes many people die when writing it. But the goal of P/ is almost the same. Basically, P/ wants to have a simple and functional syntax like Turbo C, easy to understand and work with, but in a modern environment.
+<h1 style="font-weight:bold;">Why Eko?</h1>
+We all love C, but at the same time, it's difficult to use in projects and working with pointers makes many people die when writing it. But the goal of Eko is almost the same. Basically, P/ wants to have a simple and functional syntax like Turbo C, easy to understand and work with, but in a modern environment.
 <h1>Current status</h1>
 well, right now the project is in alpha mode. That means it's only released for debugging and it's full of bugs! And it's fixing problems and testing new features. So it's not suitable for use and it's not predictable to some extent. And it's more educational than industrial.
 <h1>Examples</h1>
-P/ is easy and really human-friendly. It's very easy to read and it depends on how well or how busy you are at coding.
+EKo is easy and really human-friendly. It's very easy to read and it depends on how well or how busy you are at coding.
 <pre><code>
 generate main() {
   write("Hello World!\n");
@@ -76,7 +74,7 @@ generate main() {
 
 </code></pre>
 More example in (src/examples)
-if you want learn P/ fully, you can go to <a href="https://anhumandev.github.io/psl">Here.</a>
+if you want learn Eko fully, you can go to <a href="https://ekolang.github.io/eko">Here.</a>
 
 
 # Compile it yourself
@@ -87,11 +85,11 @@ Dub dependencies are automatically downloaded during compilation and do not need
 (dub will install auto with DMD)
 
 after download and install dmd in your system, clone repository with ```git```:
-```git clone https://github.com/pouya1dev/lpa```
+```git clone https://github.com/ekolang/eko```
 after that, open ```lpa``` folder with ```cd lpa```
 and go to ```runtime```
 You have to first compile runtime library, them put it in a global-library folder then linux and linker can found it. for example, you can put it in ```/usr/local/lib```.
 after putting library in ```/usr/local/lib``` go back and in ```src```, run ```dub```.
 
-Also, you can change ```dub.json``` to build ```lpa``` as release not debug. (lower-binery size.)
-now, try it with ```./lpa --version``` and enjoy.
+Also, you can change ```dub.json``` to build ```eko``` as release not debug. (lower-binery size.)
+now, try it with ```./eko --version``` and enjoy.
