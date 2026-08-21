@@ -52,7 +52,7 @@ void main(string[] args)
 				if (args[1] == "-ge" || args[1] == "--generate-exe"){
 					infs(args[2], "cc", "ll", 0);
 				} else {
-					if (args[4] == "--print:ast") infs(args[2], "normal", "ll", 1);
+					if (args.length > 4 && args[4] == "--print:ast") infs(args[2], "normal", "ll", 1); //fixed for bug/C002
             		else infs(args[2], "normal", "ll", 0);
 				}
 			}
