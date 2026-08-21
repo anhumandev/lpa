@@ -1,11 +1,10 @@
 {
-	"description": "runtime for P/",
+	"description": "runtime for eko",
 	"license": "proprietary",
 	"authors": [
 		"anhumandev"
 	],
 	"dependencies": {
-		"dgfx": "~>1.3.6",
 		"arsd-official:simpledisplay": "~>10.7.0"
 	},
 	"copyright": "Copyright © 2026, anhumandev",

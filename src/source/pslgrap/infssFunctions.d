@@ -1,4 +1,4 @@
-module pslgrap.infssfunctions;
+module ekograp.infssfunctions;
 
 import std.stdio;
 import error;
@@ -12,7 +12,7 @@ import core.stdc.stdlib: exit, malloc, system;
 import cslg.ultracgraphic.sgfu;
 import csl.mempack.freec;
 import csl.mempack.mallc;
-import csl.preprs.define, infss, pslgrap.functions, arsd.simpledisplay;
+import csl.preprs.define, infss, ekograp.functions, arsd.simpledisplay;
 
 void graphicFucntionsManager(string lio)
 {

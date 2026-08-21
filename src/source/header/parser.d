@@ -17,7 +17,7 @@ void par9ser(Tokan[] line, string strline, ref int kjka)
     if (canFind(line, check_token)) brclose = 1;
     foreach(jk; line)
     {
-        if (jk.value == "generate")
+        if (jk.value == "generate" || jk.value == "gen")
         {
             generatesaw = 1;
             continue;

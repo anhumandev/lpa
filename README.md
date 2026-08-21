@@ -16,13 +16,13 @@ We all love C, but at the same time, it's difficult to use in projects and worki
 well, right now the project is in alpha mode. That means it's only released for debugging and it's full of bugs! And it's fixing problems and testing new features. So it's not suitable for use and it's not predictable to some extent. And it's more educational than industrial.
 <h1>Examples</h1>
 EKo is easy and really human-friendly. It's very easy to read and it depends on how well or how busy you are at coding.
-<p>print hello world ```helloworld.eko```</p>
+<p>print hello world ``helloworld.eko``</p>
 <pre><code>
 generate main() {
   write("Hello World!\n");
 }
 </pre></code>
-<p>print hello world with escapes and add to string to themself ```helloworlde.eko```</p.
+<p>print hello world with escapes and add to string to themself ``helloworlde.eko``</p>
 <pre><code>
 generate main() {
   // s0 is a escape for space
@@ -31,7 +31,7 @@ generate main() {
   return 0;
 }
 </pre></code>
-<p>get input from user and check if it equal to a value ```checkinput.eko```</p>
+<p>get input from user and check if it equal to a value ``checkinput.eko``</p>
 <pre><code>
 generate char -v:content[] = getInput().chomp
 
@@ -41,9 +41,9 @@ generate main() {
         end;
 }
 </pre></code>
-<p>create a function (give arguments is not support for now) ```func.eko```</p>
+<p>create a function (give arguments is not support for now) ``func.eko``</p>
 <pre><code>
-  generate Printer() {
+generate Printer() {
 	write("Hello");
 }
 
@@ -51,9 +51,9 @@ generate main() {
 	Printer();
 }
 </code></pre>
-<p>create a loop to print from zero to 12 ```loop.eko```</p>
+<p>create a loop to print from zero to 12 ``loop.eko``</p>
 <pre><code>
-  generate int -v:count = 0
+generate int -v:count = 0
 
 generate print() {
 	-v:count = -v:count++
@@ -73,7 +73,7 @@ generate main() {
 }
 
 </code></pre>
-More example in (src/examples)
+More example in (examples/)
 if you want learn Eko fully, you can go to <a href="https://ekolang.github.io/eko">Here.</a>
 
 

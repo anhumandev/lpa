@@ -30,6 +30,7 @@ void funcl(string lio, string mode, int addm)
     //riteln("S*&8g: " ~ to!string(globalf));
     if (lio.startsWith("_"))
     {
+        if (mode == "debug") writeln("Ast called.");
         astSupportLine(lio, addm);
     } else if(lio.startsWith("DebugPrintFlag(") && lio.endsWith(");")){
         auto uai = regex(`DebugPrintFlag\((.+)\);`);
