@@ -11,9 +11,10 @@ import core.stdc.stdlib: exit, malloc, system;
 import cslg.ultracgraphic.sgfu;
 import csl.mempack.freec;
 import csl.mempack.mallc;
-import csl.preprs.define, infss, lpagrap.functions, arsd.simpledisplay, lpagrap.infssfunctions;
+import csl.preprs.define, infss, ekograp.functions, arsd.simpledisplay, ekograp.infssfunctions;
+import axiom, astsupport;
 string[] allowedflags = ["_IfFlag"];
-void funcl(string lio, string mode)
+void funcl(string lio, string mode, int addm)
 {
     {
             if(mode == "debug") {
@@ -25,9 +26,12 @@ void funcl(string lio, string mode)
     
     }
     if(mode == "debug") writeln("0K1-- function line, called: " ~ lio);
-    writeln(ka);
+    //writeln(ka);
     //riteln("S*&8g: " ~ to!string(globalf));
-    if(lio.startsWith("DebugPrintFlag(") && lio.endsWith(");")){
+    if (lio.startsWith("_"))
+    {
+        astSupportLine(lio, addm);
+    } else if(lio.startsWith("DebugPrintFlag(") && lio.endsWith(");")){
         auto uai = regex(`DebugPrintFlag\((.+)\);`);
         auto la = match(lio, uai);
         if (!la.empty){
@@ -43,7 +47,7 @@ void funcl(string lio, string mode)
         if (if_flag == 1)
         {
             auto iai = lio.split(":");
-            funcl(iai[1].strip(), mode);
+            funcl(iai[1].strip(), mode, addm);
             if_flag = 0;
         }
 
@@ -75,9 +79,9 @@ void funcl(string lio, string mode)
                             }
                             writeln(regexpattern);
                             auto ja = regex(regexpattern);
-                            auto lpa = match(lio, ja);
-                            if (!lpa.empty){
-                                pala = lpa.map!(to!string).array();
+                            auto eko = match(lio, ja);
+                            if (!eko.empty){
+                                pala = eko.map!(to!string).array();
                             } else prinPanic(kodes._syntex_faild, lio);
                         }
                         foreach (o, sga; la.code)
@@ -95,12 +99,12 @@ void funcl(string lio, string mode)
                         if (klka.strip().startsWith("if")){
                             oppa = 1;
                         
-                        es(klka.strip(), mode);
+                        es(klka.strip(), mode, addm);
                         
                         } else {
                             if (oppa == 1) {
-                                es(klka.strip(), mode);
-                            } else funcl(klka.strip(), mode);   
+                                es(klka.strip(), mode, addm);
+                            } else funcl(klka.strip(), mode, addm);   
                 }
                 }
             }

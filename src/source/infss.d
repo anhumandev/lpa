@@ -1,5 +1,5 @@
 module infss;
-
+public import axiom;
 import std.stdio;
 import std.file;
 import std.conv;
@@ -28,7 +28,9 @@ enum TokanType {
     funcname,
     undr,
     Sm_m,
-    Sm_f
+    Sm_f,
+    Gen,
+    AstNeeded
 }
 
 int isMain = 0;
@@ -50,7 +52,10 @@ int shortmode = 0;
 int read_file_call = 0;
 string read_file_save_result_string;
 const string _requestedversion = "0.0.1";
-void infs(string filepath, string mode, string la)
+
+import astsupport;
+
+void infs(string filepath, string mode, string la, int addmode)
 {
     init("0.0.1");
     string hah = "";
@@ -70,7 +75,7 @@ void infs(string filepath, string mode, string la)
             if (mode == "debug") writeln(hh);
             a++;
             TokanType type;
-            if (hh == "int" || hh == "string" || hh == "long" || hh == "short" || hh == "float" || hh == "double" || hh == "void*" || hh == "if" || hh == "generate") //keywords in here
+            if (hh == "int" || hh == "string" || hh == "void*" || hh == "if") //keywords in here
             {
                 type = TokanType.Keyword;
             } else if(hh == "unsigned" || hh == "signed" || hh == "auto") {
@@ -93,6 +98,10 @@ void infs(string filepath, string mode, string la)
                 type = TokanType.funcname;
             } else if (hh.indexOf("(") != -1){
                 type = TokanType.Value;
+            } else if (hh == "generate" || hh == "gen"){
+                type = TokanType.Gen;
+            } else if (hh == "long" || hh == "short" || hh == "float" || hh == "double"){
+                type = TokanType.AstNeeded;
             } else {
                 if (hh.startsWith("\"") && hh.endsWith("\"")){
                     //writeln(hh);
@@ -134,7 +143,11 @@ void infs(string filepath, string mode, string la)
         }
         
         try {
-
+            if (tks.length > 0 && tks[0].token == TokanType.Gen && tks[1].token == TokanType.AstNeeded)
+            {
+                astSupportLine(ga, addmode);
+                continue;
+            }
             // ============== function manager ========
             //writeln(count_to_find_end);
             handle_(tks, mode, ga);
@@ -153,7 +166,7 @@ void infs(string filepath, string mode, string la)
                 }
             // ============== Header Manager ==========
             
-                if (tks.length > 1 && tks[0].value == "generate" && tks[1].value == "header") {
+                if (tks.length > 1 && (tks[0].value == "generate" || tks[0].value == "gen") && tks[1].value == "header") {
                     Tokan cs = Tokan(TokanType.Br1, "{");
                     if (canFind(tks, cs))
                     {
@@ -199,7 +212,7 @@ void infs(string filepath, string mode, string la)
                         k.close();
                         proce(readText(filepath.replace(".csl", "") ~".csc"),  filepath.replace(".csl", ".csc"), "n", la);
                     } else {
-                    es(hah, mode);
+                    es(hah, mode, addmode);
                     }
                     isMain = 0;
                     continue;
@@ -241,8 +254,8 @@ void infs(string filepath, string mode, string la)
             } else {
                 int unsi = 0;
                 
-            if (tks.length > 0 && (tks[0].token == TokanType.Keyword || tks[0].token == TokanType.undr || tks[0].value == "generate")){
-                if (tks[0].value == "int" || tks[0].value == "string" || tks[0].value == "double" || tks[0].value == "float" || tks[0].value == "double" || tks[0].value == "long" || tks[0].value == "short" || tks[0].value == "signed" || tks[0].value == "unsigned" || tks[0].value == "void*" || tks[0].value == "generate"){
+            if (tks.length > 0 && (tks[0].token == TokanType.Keyword || tks[0].token == TokanType.undr || tks[0].value == "generate" || tks[0].value == "gen")){
+                if (tks[0].value == "int" || tks[0].value == "string" || tks[0].value == "double" || tks[0].value == "float" || tks[0].value == "double" || tks[0].value == "long" || tks[0].value == "short" || tks[0].value == "signed" || tks[0].value == "unsigned" || tks[0].value == "void*" || tks[0].value == "generate" || tks[0].value == "gen"){
                     if (mode == "debug")
                     {
                         writeln(tks[0].value);
@@ -258,7 +271,7 @@ void infs(string filepath, string mode, string la)
                         {
                             
                             if (tks[0].value == "string"){
-                                if (tks[1].value.endsWith("[]")){
+                                if (true){
                                     if (tks[2].value == "=")
                                     {
                                         if (tks[3].value.startsWith("\"") && tks[3].value.endsWith("\"")){
@@ -341,7 +354,7 @@ void infs(string filepath, string mode, string la)
                         if(mode == "debug") writeln(tks.length > 2);
                         if(mode == "debug")writeln(tks.length > 2 && tks[2].value == "{");
                         if(mode == "debug") writeln(tks[1].value.indexOf("main(){"));
-                    if (tks[0].value == "generate"){
+                    if (tks[0].value == "generate" || tks[0].value == "gen"){
                         if (tks[1].value.startsWith("main()") && (tks.length > 1 && tks[2].value == "{") || tks[1].value.indexOf("main(){") != -1){
                             if (mode == "debug"){
                                 writeln("Main defined for (this main program)...");
@@ -369,7 +382,7 @@ void infs(string filepath, string mode, string la)
                         } else {
                             tks = tks.remove(0);
                             if (tks[0].value == "string"){
-                                if (tks[1].value.endsWith("[]")){
+                                if (true){
                                     if (tks[2].value == "=")
                                     {
                                         if(mode == "debug") writeln(tks[3]);
@@ -518,7 +531,7 @@ public int if_flag;
 int nbr = 0;
     int l = 0;
     string codes;
-void es(string line, string mode){
+void es(string line, string mode, int addf){
     
     string[] lia = line.splitLines();
     foreach(lio; lia){
@@ -531,7 +544,7 @@ void es(string line, string mode){
         foreach(oo; ak)
         {
             oo = oo.strip();
-            funcl(oo, mode);
+            funcl(oo, mode, addf);
         }
       } else {
         if (mode == "debug") writeln(lio);
@@ -545,7 +558,7 @@ void es(string line, string mode){
                         string[] liaa = codes.splitLines();
                         foreach (lo; liaa)
                         {
-                            funcl(lo, mode);
+                            funcl(lo, mode, addf);
                         }
                         nbr = 0;
                         //if_flag = 0;
@@ -568,7 +581,7 @@ void es(string line, string mode){
                 {
                     if (lio.startsWith("return -999;") || (lio.strip() == ("end;"))) {
                         if (l != 99){
-                        funcl(codes, mode);
+                        funcl(codes, mode, addf);
                         } else { 
                             nbr = 0;
                             l = 0;
@@ -769,7 +782,7 @@ void es(string line, string mode){
                     }
                     }
                 } else {
-                    if (nbr == 0) funcl(lio, mode);
+                    if (nbr == 0) funcl(lio, mode, addf);
                 }
       }
     

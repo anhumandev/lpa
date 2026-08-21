@@ -68,7 +68,7 @@ void handle_(Tokan[] tkl, string mode, string li)
         //writeln(tkl);
     }
     //check if is it func or not
-    if (tkl.length > 1 && tkl[0].value == "generate")
+    if (tkl.length > 1 && (tkl[0].value == "generate" || tkl[0].value == "gen"))
     {
         // developer wants to define something.
         // if it dosent be main, or int or a keyword, + header and BOX its count as function
@@ -124,7 +124,7 @@ void handle_(Tokan[] tkl, string mode, string li)
                 count_to_find_end = 0;
                 }
             } else {
-                if (tkl[0].value == "generate") funcvaluesave ~= li;
+                if (tkl[0].value == "generate" || tkl[0].value == "gen") funcvaluesave ~= li;
             }
         }
     }
