@@ -1,5 +1,7 @@
-wget https://github.com/pouya1dev/lpa/releases/download/alpha-0.0.3/lpa-x86_64-linux-v0.0.3alpha.tar.xz
-tar -xJvf lpa-x86_64-linux-v0.0.3alpha.tar.xz
-cd bin
-mv bin/libmarschiert.a /usr/local/lib
-mv bin/lpa /usr/local/bin
+wget https://github.com/ekolang/eko/archive/refs/tags/alpha-0.0.4.zip
+mkdir alpha-0.0.4
+unzip alpha-0.0.4.zip -d alpha-0.0.4/
+cd alpha-0.0.4/src/runtime
+dub
+cd ..
+dub
